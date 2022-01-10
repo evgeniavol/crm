@@ -104,13 +104,14 @@ const createRow = ({
   tdId.setAttribute('data-id', id);
   const span = document.createElement('span');
   span.classList.add('table__cell-id');
-  span.textContent = `id: id`
+  span.textContent = `id: ${id}`
+  tdId.textContent = title;
   tdId.append(span);
 
 
   const tdName = document.createElement('td');
   tdName.classList.add('table__cell', 'table__cell_left');
-  tdName.textContent = title;
+  tdName.textContent = category;
 
   const tdNameMeasurement = document.createElement('td');
   tdNameMeasurement.classList.add('table__cell');
@@ -143,7 +144,8 @@ const createRow = ({
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
-return console.log(tr);
+ 
+return  tableBody.append(tr);
 }
 
 const renderGoods = (goods) => {
