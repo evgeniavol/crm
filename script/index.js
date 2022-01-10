@@ -80,15 +80,18 @@ const tableBody = document.querySelector('.table__body');
 */
 
 const removeActiveOverlay = overlay.classList.remove('active');
-const createRow = ([{
+
+
+const createRow = ({
   id: id,
-  titleName: title,
-  priceName: price,
-  descriptionName: description,
-  categoryNAme: category,
-  countName: count,
-  unitsName: units,
-}]) => {
+  title: title,
+  price: price,
+  description: description,
+  category: category,
+  count: count,
+  units: units,
+}) => {
+
 
   const tr = document.createElement('tr');
 
@@ -97,7 +100,7 @@ const createRow = ([{
 
 
   const tdId = document.createElement('td');
-  tdId.classList.add('table__cell table__cell_left table__cell_name');
+  tdId.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
   tdId.setAttribute('data-id', id);
   const span = document.createElement('span');
   span.classList.add('table__cell-id');
@@ -106,36 +109,36 @@ const createRow = ([{
 
 
   const tdName = document.createElement('td');
-  tdName.classList.add('table__cell table__cell_left');
-  tdName.textContent = titleName;
+  tdName.classList.add('table__cell', 'table__cell_left');
+  tdName.textContent = title;
 
   const tdNameMeasurement = document.createElement('td');
   tdNameMeasurement.classList.add('table__cell');
-  tdNameMeasurement.textContent = unitsName;
+  tdNameMeasurement.textContent = units;
 
   const tdCount = document.createElement('td');
   tdCount.classList.add('table__cell');
-  tdCount.textContent = countName;
+  tdCount.textContent = count;
 
   const tdPrice = document.createElement('td');
   tdPrice.classList.add('table__cell');
-  tdPrice.textContent = priceName;
+  tdPrice.textContent = price;
 
   const tdTotalPrice = document.createElement('td');
   tdTotalPrice.classList.add('table__cell');
-  tdTotalPrice.textContent = `${priceName*countName}`
+  tdTotalPrice.textContent = `${price*count}`
 
   const tdBtnWrap = document.createElement('td');
-  tdBtnWrap.classList.add('table__cell table__cell_btn-wrapper');
+  tdBtnWrap.classList.add('table__cell', 'table__cell_btn-wrapper');
 
   const buttonPic = document.createElement('button');
-  buttonPic.classList.add('table__btn table__btn_pic');
+  buttonPic.classList.add('table__btn', 'table__btn_pic');
 
   const buttonEdit = document.createElement('button');
-  buttonEdit.classList.add('table__btn table__btn_edit');
+  buttonEdit.classList.add('table__btn', 'table__btn_edit');
 
   const buttonDel = document.createElement('button');
-  buttonDel.classList.add('table__btn table__btn_del');
+  buttonDel.classList.add('table__btn', 'table__btn_del');
 
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
@@ -144,7 +147,9 @@ return console.log(tr);
 }
 
 const renderGoods = (goods) => {
-  goods.map(item => {
-    return createRow(item);
-  });
+    console.log(goods);
+    goods.map(item => {
+        return createRow(item);
+    });
 }
+renderGoods(goods);
