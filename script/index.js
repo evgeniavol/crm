@@ -63,20 +63,25 @@ const modalForm = document.querySelector('.modal__form');
 const modalCheckbox = document.querySelector('.modal__checkbox');
 const modalInputDiscount = document.querySelector('.modal__input_discount');
 const overlay = document.querySelector('.overlay');
+const overlayModal = document.querySelector('.overlay__modal');
 const tableBody = document.querySelector('.table__body');
 const removeActiveOverlay = overlay.classList.remove('active');
 const btnAddGoods = document.querySelector('.panel__add-goods');
 const modalClose = document.querySelector('.modal__close');
 
-btnAddGoods.addEventListener('click', ()=> {
+
+btnAddGoods.addEventListener('click', () => {
   overlay.classList.add('active');
-})
-modalClose.addEventListener('click', ()=> {
+});
+modalClose.addEventListener('click', () => {
   overlay.classList.remove('active');
-})
-overlay.addEventListener('click', ()=> {
-  overlay.classList.remove('active');
-})
+});
+
+overlay.addEventListener('click', (e) => {
+  if (e.target.classList.contains('overlay')) {
+    overlay.classList.toggle('active');
+  }
+});
 
 const createRow = ({
   id: id,
@@ -140,13 +145,13 @@ const createRow = ({
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
- 
-return  tableBody.append(tr);
+
+  return tableBody.append(tr);
 }
 
 const renderGoods = (goods) => {
-    goods.map(item => {
-        return createRow(item);
-    });
+  goods.map(item => {
+    return createRow(item);
+  });
 }
 renderGoods(goods);
