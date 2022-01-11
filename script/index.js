@@ -66,18 +66,7 @@ const overlay = document.querySelector('.overlay');
 
 const tableBody = document.querySelector('.table__body');
 
-/*
 
-2. Создайте функцию createRow, которая будет получать объект и на основе объекта формировать элемент  
-
-Такого вида 
-3. Создайте функцию renderGoods, принимает один параметр массив с объектами
-
-Функция renderGoods перебирает массив и вставляет строки , созданные на основе createRow, в таблицу
-
-
-
-*/
 
 const removeActiveOverlay = overlay.classList.remove('active');
 
@@ -149,7 +138,6 @@ return  tableBody.append(tr);
 }
 
 const renderGoods = (goods) => {
-    console.log(goods);
     goods.map(item => {
         return createRow(item);
     });
