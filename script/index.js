@@ -63,13 +63,20 @@ const modalForm = document.querySelector('.modal__form');
 const modalCheckbox = document.querySelector('.modal__checkbox');
 const modalInputDiscount = document.querySelector('.modal__input_discount');
 const overlay = document.querySelector('.overlay');
-
 const tableBody = document.querySelector('.table__body');
-
-
-
 const removeActiveOverlay = overlay.classList.remove('active');
+const btnAddGoods = document.querySelector('.panel__add-goods');
+const modalClose = document.querySelector('.modal__close');
 
+btnAddGoods.addEventListener('click', ()=> {
+  overlay.classList.add('active');
+})
+modalClose.addEventListener('click', ()=> {
+  overlay.classList.remove('active');
+})
+overlay.addEventListener('click', ()=> {
+  overlay.classList.remove('active');
+})
 
 const createRow = ({
   id: id,
