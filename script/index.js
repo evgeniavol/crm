@@ -68,9 +68,8 @@ const tableBody = document.querySelector('.table__body');
 const removeActiveOverlay = overlay.classList.remove('active');
 const btnAddGoods = document.querySelector('.panel__add-goods');
 const modalClose = document.querySelector('.modal__close');
-const iconDel = document.querySelector('.table__btn table__btn_del');
 const table = document.querySelector('.goods__table table');
-// 
+
 
 btnAddGoods.addEventListener('click', () => {
   overlay.classList.add('active');
@@ -146,33 +145,29 @@ const createRow = ({
   const buttonDel = document.createElement('button');
   buttonDel.classList.add('table__btn', 'table__btn_del');
 
+  buttonDel.addEventListener('click', e => {
+    const target = e.target;
+    goods.splice(id - 1, 1);
+    console.log(goods);
+    if (target.closest('.table__btn_del')) {
+      const markTr = target.closest('tr');
+      markTr.remove();
+    }
+  })
+
+
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
+
   return tableBody.append(tr);
 }
+
 
 const renderGoods = (goods) => {
   goods.map(item => {
     return createRow(item);
   });
 }
+
 renderGoods(goods);
-
-/// delegation
-
-tableBody.addEventListener('click', e => {
-  const target = e.target;
-  console.log(target);
-
-  if (target.closest('.table__btn_del')) {
-    const markTr = target.closest('tr');
-    let textContentTr = markTr.textContent;
-    let arr = textContentTr.split(' ');
-    console.log(arr);
-    // 4Витая пара PROConnect 01-0043-3-25id: 4cablesv420229240
-    markTr.remove();
-  }
-});
-
-
