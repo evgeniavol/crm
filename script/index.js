@@ -209,41 +209,42 @@ const generatorRandomId = () => {
   return randomId;
 };
 
-const formControl = (modalForm) => {
-  modalForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const newProduct = Object.fromEntries(formData);
 
-    const {
-      name: name,
-      category: category,
-      description: description,
-      units: units,
-      discount: discount,
-      'discount_count': discountCount,
-      count: count,
-      price: price,
-      image: image,
-      id: id
-    } = newProduct;
-    const countProdct = newProduct.count;
-    const discountProdct = newProduct['discount_count'];
-    const priceProdct = newProduct.price;
-    const disc = discountProdct / 100;
-    const total = countProdct * priceProdct;
-    const totalProdctDiscount = total / 100;
-    const calculateTotalProduct = total - totalProdctDiscount;
-    modalTotalPrice.append(calculateTotalProduct);
-    modalForm.reset();
-    modalCheckbox.checked = false;
-    modalBtnSumbit.addEventListener('click', closeModal ); 
+const totalPrice = (countProductModal, modalInputDiscount, priceProductModal) => {
+
+    countProductModal.addEventListener('blur', e => {
+    const target = parseFloat(e.target.value);
+    const countProdct = target;
   });
 
+  modalInputDiscount.addEventListener('blur', e => {
+    const target = parseFloat(e.target.value);
+    const discountProdct = target;
+  });
+
+  priceProductModal.addEventListener('blur', e => {
+    const target = parseFloat(e.target.value);
+    const priceProdct = target;
+  });
+  
+  return {
+    countProductModal,
+    modalInputDiscount,
+    priceProductModal
+  }
 };
 
+
+// const calculationTotalPrices = (countProdct, discountProdct, priceProdct) => {
+//   const disc = discountProdct / 100;
+//   const total = countProdct * priceProdct;
+//   const totalSumDisc = total * disc
+//   const totalWithDisc = total - totalSumDisc;
+//   modalTotalPrice.innerHTML = totalWithDisc;
+
+// }
+
+
 modalControl(btnAddGoods, overlay);
-formControl(modalForm);
+totalPrice(countProductModal, modalInputDiscount, priceProductModal);
 renderGoods(goods);
-
-
