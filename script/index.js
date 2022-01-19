@@ -61,7 +61,6 @@ const goods = [{
 const modalTitle = document.querySelector('.modal__title');
 const modalForm = document.querySelector('.modal__form');
 const modalCheckbox = document.querySelector('.modal__checkbox');
-const modalInputDiscount = document.querySelector('.modal__input_discount');
 const overlay = document.querySelector('.overlay');
 const overlayModal = document.querySelector('.overlay__modal');
 const tableBody = document.querySelector('.table__body');
@@ -74,13 +73,13 @@ const nameProductModal = document.getElementById('name');
 const categoryProductModal = document.getElementById('category');
 const descriptionProductModal = document.getElementById('description');
 const unitsProductModal = document.getElementById('units');
-const discountProductModal = document.getElementById('discount');
-const countProductModal = document.getElementById('count');
-const priceProductModal = document.getElementById('price');
-const modalId = document.querySelector('.vendor-code__id');
-const modalTotalPrice = document.querySelector('.modal__total-price');
+let modalInputDiscount = document.querySelector('.modal__input_discount');
+let discountProductModal = document.getElementById('discount');
+let countProductModal = document.getElementById('count');
+let priceProductModal = document.getElementById('price');
+let modalId = document.querySelector('.vendor-code__id');
+let modalTotalPrice = document.querySelector('.modal__total-price');
 const modalBtnSumbit = document.querySelector('.modal__submit');
-
 
 
 const createRow = ({
@@ -203,48 +202,32 @@ modalCheckbox.addEventListener('click', () => {
 
 });
 
-
 const generatorRandomId = () => {
   const randomId = Math.round((Math.random() * 24601654816512) + 1);
   return randomId;
 };
 
-
 const totalPrice = (countProductModal, modalInputDiscount, priceProductModal) => {
 
-    countProductModal.addEventListener('blur', e => {
-    const target = parseFloat(e.target.value);
-    const countProdct = target;
-  });
+const calculationTotalPrices = () => {
+  let modalInputDiscount = document.querySelector('.modal__input_discount');
+  let countProductModal = document.getElementById('count');
+  let priceProductModal = document.getElementById('price');
 
-  modalInputDiscount.addEventListener('blur', e => {
-    const target = parseFloat(e.target.value);
-    const discountProdct = target;
-  });
+  let disc = parseFloat(modalInputDiscount.value) /100;
+  let total = countProductModal.value * priceProductModal.value;
+  let totalSumDisc = total * disc;
+  let totalWithDisc = total - totalSumDisc;
+  modalTotalPrice.innerHTML = `$ ${totalWithDisc}`;
+};
 
-  priceProductModal.addEventListener('blur', e => {
-    const target = parseFloat(e.target.value);
-    const priceProdct = target;
-  });
-  
-  return {
-    countProductModal,
-    modalInputDiscount,
-    priceProductModal
-  }
+countProductModal.addEventListener('blur', calculationTotalPrices);
+modalInputDiscount.addEventListener('blur', calculationTotalPrices);
+priceProductModal.addEventListener('blur', calculationTotalPrices);
 };
 
 
-// const calculationTotalPrices = (countProdct, discountProdct, priceProdct) => {
-//   const disc = discountProdct / 100;
-//   const total = countProdct * priceProdct;
-//   const totalSumDisc = total * disc
-//   const totalWithDisc = total - totalSumDisc;
-//   modalTotalPrice.innerHTML = totalWithDisc;
-
-// }
-
-
 modalControl(btnAddGoods, overlay);
-totalPrice(countProductModal, modalInputDiscount, priceProductModal);
+
 renderGoods(goods);
+totalPrice(countProductModal, discountProductModal, priceProductModal);
