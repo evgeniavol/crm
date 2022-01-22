@@ -82,6 +82,7 @@ let modalTotalPrice = document.querySelector('.modal__total-price');
 const modalBtnSumbit = document.querySelector('.modal__submit');
 
 
+
 const createRow = ({
   id: id,
   title: title,
@@ -176,8 +177,10 @@ const modalControl = (btnAddGoods) => {
   const closeModal = () => {
     overlay.classList.remove('active');
   };
+
   btnAddGoods.addEventListener('click', openModal);
   modalClose.addEventListener('click', closeModal);
+
   overlay.addEventListener('click', e => {
     const target = e.target;
     if (target === overlay || target.classList.contains('active')) {
@@ -191,6 +194,7 @@ const modalControl = (btnAddGoods) => {
 };
 
 
+
 modalCheckbox.addEventListener('click', () => {
   if (true) {
     modalCheckbox.toggleAttribute('checked');
@@ -199,35 +203,60 @@ modalCheckbox.addEventListener('click', () => {
   } else {
     modalCheckbox.checked = false;
   }
-
 });
 
 const generatorRandomId = () => {
-  const randomId = Math.round((Math.random() * 24601654816512) + 1);
+  const randomId = Math.round((Math.random() * 10) + 1);
   return randomId;
 };
 
 const totalPrice = (countProductModal, modalInputDiscount, priceProductModal) => {
 
-const calculationTotalPrices = () => {
-  let modalInputDiscount = document.querySelector('.modal__input_discount');
-  let countProductModal = document.getElementById('count');
-  let priceProductModal = document.getElementById('price');
+  const calculationTotalPrices = () => {
+    let modalInputDiscount = document.querySelector('.modal__input_discount');
+    let countProductModal = document.getElementById('count');
+    let priceProductModal = document.getElementById('price');
 
-  let disc = parseFloat(modalInputDiscount.value) /100;
-  let total = countProductModal.value * priceProductModal.value;
-  let totalSumDisc = total * disc;
-  let totalWithDisc = total - totalSumDisc;
-  modalTotalPrice.innerHTML = `$ ${totalWithDisc}`;
+    let disc = parseFloat(modalInputDiscount.value) / 100;
+    let total = countProductModal.value * priceProductModal.value;
+    let totalSumDisc = total * disc;
+    let totalWithDisc = Math.round(total - totalSumDisc);
+    modalTotalPrice.innerHTML = `$ ${totalWithDisc}`;
+  };
+
+  countProductModal.addEventListener('blur', calculationTotalPrices);
+  modalInputDiscount.addEventListener('blur', calculationTotalPrices);
+  priceProductModal.addEventListener('blur', calculationTotalPrices);
 };
 
-countProductModal.addEventListener('blur', calculationTotalPrices);
-modalInputDiscount.addEventListener('blur', calculationTotalPrices);
-priceProductModal.addEventListener('blur', calculationTotalPrices);
+const addGoodstData = newGoods => {
+  goods.push(newGoods);
 };
 
+const addGoodsPage = (goods, tableBody) => {
+  tableBody.append(createRow(goods));
+}
 
-modalControl(btnAddGoods, overlay);
+
+const formControl = (modalForm, tableBody, closeModal) => {
+  modalForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    let newGoods = Object.fromEntries(formData);
+    newGoods.id = generatorRandomId();
+    newGoods.title = newGoods.name;
+
+    addGoodstData(newGoods);
+    addGoodsPage(newGoods, tableBody);
+    modalForm.reset();
+    modalTotalPrice.value = `$`;
+    overlay.classList.remove('active');
+
+  });
+};
+
 
 renderGoods(goods);
+modalControl(btnAddGoods);
 totalPrice(countProductModal, discountProductModal, priceProductModal);
+formControl(modalForm, tableBody);
