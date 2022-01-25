@@ -153,6 +153,7 @@ const createRow = ({
   })
 
 
+
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
@@ -205,6 +206,8 @@ modalCheckbox.addEventListener('click', () => {
   }
 });
 
+
+
 const generatorRandomId = () => {
   const randomId = Math.round((Math.random() * 10) + 1);
   return randomId;
@@ -249,14 +252,16 @@ const formControl = (modalForm, tableBody, closeModal) => {
     addGoodstData(newGoods);
     addGoodsPage(newGoods, tableBody);
     modalForm.reset();
+    modalCheckbox.removeAttribute('checked');
+    modalInputDiscount.removeAttribute('disabled');
     modalTotalPrice.value = `$`;
     overlay.classList.remove('active');
 
   });
 };
 
-
 renderGoods(goods);
 modalControl(btnAddGoods);
 totalPrice(countProductModal, discountProductModal, priceProductModal);
 formControl(modalForm, tableBody);
+
