@@ -81,6 +81,7 @@ let modalId = document.querySelector('.vendor-code__id');
 let modalTotalPrice = document.querySelector('.modal__total-price');
 const modalBtnSumbit = document.querySelector('.modal__submit');
 
+let crmTotalPrice = document.querySelector(".crm__total-price");
 
 
 const createRow = ({
@@ -103,6 +104,7 @@ const createRow = ({
   const tdId = document.createElement('td');
   tdId.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
   tdId.setAttribute('data-id', id);
+
   const span = document.createElement('span');
   span.classList.add('table__cell-id');
   span.textContent = `id: ${id}`
@@ -145,7 +147,6 @@ const createRow = ({
   buttonDel.addEventListener('click', e => {
     const target = e.target;
     goods.splice(id - 1, 1);
-    console.log(goods);
     if (target.closest('.table__btn_del')) {
       const markTr = target.closest('tr');
       markTr.remove();
@@ -154,9 +155,9 @@ const createRow = ({
 
 
 
-  tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
-
+  
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
+  tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
   return tableBody.append(tr);
 }
@@ -259,6 +260,16 @@ const formControl = (modalForm, tableBody, closeModal) => {
 
   });
 };
+
+function getTotalPrice(goods) {
+  let total = 0;
+  goods.forEach((item) => {
+    total += item.price * item.count;
+  });
+  crmTotalPrice.textContent = `$${total}`;
+}
+getTotalPrice(goods);
+
 
 renderGoods(goods);
 modalControl(btnAddGoods);

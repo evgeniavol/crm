@@ -18,7 +18,9 @@
   background: #F4F2FF;
 
 }
-
+.table__header-cell {
+  padding-left: 10px;
+}
 .table__header-cell_left {
   text-align: left;
   padding: 0 20px;
@@ -46,6 +48,7 @@
   color: #C5C5C5;
   text-transform: uppercase;
   font-size: 10px;
+  left: 22px;
 }
 
 .table__cell_name {
