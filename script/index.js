@@ -96,9 +96,7 @@ const createRow = ({
 
 
   const tr = document.createElement('tr');
-  const tdNumeric = document.createElement('td');
-  tdNumeric.textContent = id;
-
+  tr.classList.add("goods__row");
 
   const tdId = document.createElement('td');
   tdId.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
@@ -143,16 +141,7 @@ const createRow = ({
   const buttonDel = document.createElement('button');
   buttonDel.classList.add('table__btn', 'table__btn_del');
 
-  buttonDel.addEventListener('click', e => {
-    const target = e.target;
-    goods.splice(id - 1, 1);
-    if (target.closest('.table__btn_del')) {
-      const markTr = target.closest('tr');
-      markTr.remove();
-    }
-  })
-
-  tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
+  tr.append(tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
 
@@ -160,6 +149,17 @@ tableBody.append(tr);
 return tableBody, tr;
 }
 
+function deleteGoods() {
+  tableBody.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.closest(".table__btn_del")) {
+      target.closest(".goods__row").remove();
+      const allGoodsRow = Array.from(tableBody.querySelectorAll(".goods__row"));
+      goods = allGoodsRow;
+    }
+  });
+}
+deleteGoods();
 
 const renderGoods = (goods) => {
   goods.map(item => {
@@ -208,7 +208,7 @@ modalCheckbox.addEventListener("click", () => {
 
 
 const generatorRandomId = () => {
-  const randomId = Math.round((Math.random() * 10) + 1);
+  const randomId = Math.round((Math.random() * 246016548165120) + 1);
   return randomId;
 };
 

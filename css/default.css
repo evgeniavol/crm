@@ -19,6 +19,7 @@ body {
   font-size: 12px;
   font-weight: 400;
   color: #25213B;
+  counter-reset: myCounter; 
   /*цвет под ваш проект*/
   background-color: #F2F0F9;
   ;

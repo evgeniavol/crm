@@ -86,3 +86,14 @@
 .table__btn_del {
   background-image: url("../img/delete.svg");
 }
+.goods__row {
+  position: relative;
+}
+
+.goods__row::before {
+  position: absolute;
+  font-weight: 600;
+  top: 24px;
+  counter-increment: myCounter; 
+  content: counter(myCounter);
+}
