@@ -96,8 +96,6 @@ const createRow = ({
 
 
   const tr = document.createElement('tr');
-  tr.classList.add("goods__row");
-
   const tdNumeric = document.createElement('td');
   tdNumeric.textContent = id;
 
@@ -153,13 +151,13 @@ const createRow = ({
       markTr.remove();
     }
   })
-  
+
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
-  
 
-  tableBody.append(tr);
-  return tableBody, tr;
+
+tableBody.append(tr);
+return tableBody, tr;
 }
 
 
@@ -276,4 +274,3 @@ renderGoods(goods);
 modalControl(btnAddGoods);
 totalPrice(countProductModal, discountProductModal, priceProductModal);
 formControl(modalForm, tableBody);
-
