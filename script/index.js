@@ -96,6 +96,7 @@ const createRow = ({
 
 
   const tr = document.createElement('tr');
+  tr.classList.add("goods__row");
 
   const tdNumeric = document.createElement('td');
   tdNumeric.textContent = id;
@@ -152,14 +153,13 @@ const createRow = ({
       markTr.remove();
     }
   })
-
-
-
   
   tr.append(tdNumeric, tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
+  
 
-  return tableBody.append(tr);
+  tableBody.append(tr);
+  return tableBody, tr;
 }
 
 
@@ -197,13 +197,13 @@ const modalControl = (btnAddGoods) => {
 
 
 
-modalCheckbox.addEventListener('click', () => {
-  if (true) {
-    modalCheckbox.toggleAttribute('checked');
-    modalInputDiscount.toggleAttribute('disabled');
-    modalInputDiscount.value = '';
+modalCheckbox.addEventListener("click", () => {
+  if (
+    modalCheckbox.checked && modalInputDiscount.disabled === true) {
+    modalInputDiscount.disabled = false;
   } else {
-    modalCheckbox.checked = false;
+    modalInputDiscount.disabled = true;
+    modalInputDiscount.value = '';
   }
 });
 
@@ -243,6 +243,7 @@ const addGoodsPage = (goods, tableBody) => {
 
 
 const formControl = (modalForm, tableBody, closeModal) => {
+
   modalForm.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(e.target);
