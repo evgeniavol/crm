@@ -145,8 +145,9 @@ const createRow = ({
   tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
 
 
-tableBody.append(tr);
-return tableBody, tr;
+  tableBody.append(tr);
+  getTotalPrice(goods);
+  return tableBody, tr;
 }
 
 function deleteGoods() {
@@ -176,6 +177,8 @@ const modalControl = (btnAddGoods) => {
   };
   const closeModal = () => {
     overlay.classList.remove('active');
+    modalCheckbox.checked = false;
+    modalInputDiscount.disabled = true;
   };
 
   btnAddGoods.addEventListener('click', openModal);
@@ -192,20 +195,6 @@ const modalControl = (btnAddGoods) => {
   };
 
 };
-
-
-
-modalCheckbox.addEventListener("click", () => {
-  if (
-    modalCheckbox.checked && modalInputDiscount.disabled === true) {
-    modalInputDiscount.disabled = false;
-  } else {
-    modalInputDiscount.disabled = true;
-    modalInputDiscount.value = '';
-  }
-});
-
-
 
 const generatorRandomId = () => {
   const randomId = Math.round((Math.random() * 246016548165120) + 1);
@@ -240,7 +229,18 @@ const addGoodsPage = (goods, tableBody) => {
 }
 
 
-const formControl = (modalForm, tableBody, closeModal) => {
+
+const formControl = (modalForm, tableBody) => {
+
+  modalCheckbox.addEventListener("click", () => {
+    if (
+      modalCheckbox.checked && modalInputDiscount.disabled === true) {
+      modalInputDiscount.disabled = false;
+    } else {
+      modalInputDiscount.disabled = true;
+      modalInputDiscount.value = '';
+    }
+  });
 
   modalForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -252,14 +252,11 @@ const formControl = (modalForm, tableBody, closeModal) => {
     addGoodstData(newGoods);
     addGoodsPage(newGoods, tableBody);
     modalForm.reset();
-    modalCheckbox.removeAttribute('checked');
-    modalInputDiscount.removeAttribute('disabled');
     modalTotalPrice.value = `$`;
     overlay.classList.remove('active');
 
   });
 };
-
 function getTotalPrice(goods) {
   let total = 0;
   goods.forEach((item) => {
@@ -267,6 +264,7 @@ function getTotalPrice(goods) {
   });
   crmTotalPrice.textContent = `$${total}`;
 }
+
 getTotalPrice(goods);
 
 
