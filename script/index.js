@@ -1,6 +1,8 @@
-'use strict';
+import {formControl, modalControl, } from './modules/controls.js';
+import {renderGoods} from './modules/renderGoods';
+import {getTotalPrice} from './modules/getTotalPrice.js';
 
-const goods = [{
+let goods = [{
     "id": 1,
     "title": "Смартфон Xiaomi 11T 8/128GB",
     "price": 27000,
@@ -58,217 +60,16 @@ const goods = [{
   }
 ];
 
-const modalTitle = document.querySelector('.modal__title');
-const modalForm = document.querySelector('.modal__form');
-const modalCheckbox = document.querySelector('.modal__checkbox');
-const overlay = document.querySelector('.overlay');
-const overlayModal = document.querySelector('.overlay__modal');
-const tableBody = document.querySelector('.table__body');
-const removeActiveOverlay = overlay.classList.remove('active');
-const btnAddGoods = document.querySelector('.panel__add-goods');
-const modalClose = document.querySelector('.modal__close');
-const table = document.querySelector('.goods__table table');
 
-const nameProductModal = document.getElementById('name');
-const categoryProductModal = document.getElementById('category');
-const descriptionProductModal = document.getElementById('description');
-const unitsProductModal = document.getElementById('units');
-let modalInputDiscount = document.querySelector('.modal__input_discount');
-let discountProductModal = document.getElementById('discount');
-let countProductModal = document.getElementById('count');
-let priceProductModal = document.getElementById('price');
-let modalId = document.querySelector('.vendor-code__id');
-let modalTotalPrice = document.querySelector('.modal__total-price');
-const modalBtnSumbit = document.querySelector('.modal__submit');
 
 let crmTotalPrice = document.querySelector(".crm__total-price");
 
+{
 
-const createRow = ({
-  id: id,
-  title: title,
-  price: price,
-  description: description,
-  category: category,
-  count: count,
-  units: units,
-}) => {
-
-
-  const tr = document.createElement('tr');
-  tr.classList.add("goods__row");
-
-  const tdId = document.createElement('td');
-  tdId.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
-  tdId.setAttribute('data-id', id);
-
-  const span = document.createElement('span');
-  span.classList.add('table__cell-id');
-  span.textContent = `id: ${id}`
-  tdId.textContent = title;
-  tdId.append(span);
-
-
-  const tdName = document.createElement('td');
-  tdName.classList.add('table__cell', 'table__cell_left');
-  tdName.textContent = category;
-
-  const tdNameMeasurement = document.createElement('td');
-  tdNameMeasurement.classList.add('table__cell');
-  tdNameMeasurement.textContent = units;
-
-  const tdCount = document.createElement('td');
-  tdCount.classList.add('table__cell');
-  tdCount.textContent = count;
-
-  const tdPrice = document.createElement('td');
-  tdPrice.classList.add('table__cell');
-  tdPrice.textContent = price;
-
-  const tdTotalPrice = document.createElement('td');
-  tdTotalPrice.classList.add('table__cell');
-  tdTotalPrice.textContent = `${price*count}`
-
-  const tdBtnWrap = document.createElement('td');
-  tdBtnWrap.classList.add('table__cell', 'table__cell_btn-wrapper');
-
-  const buttonPic = document.createElement('button');
-  buttonPic.classList.add('table__btn', 'table__btn_pic');
-
-  const buttonEdit = document.createElement('button');
-  buttonEdit.classList.add('table__btn', 'table__btn_edit');
-
-  const buttonDel = document.createElement('button');
-  buttonDel.classList.add('table__btn', 'table__btn_del');
-
-  tr.append(tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
-  tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
-
-
-  tableBody.append(tr);
+  renderGoods(goods);
+  modalControl(btnAddGoods);
+  totalPrice(countProductModal, discountProductModal, priceProductModal);
+  formControl(modalForm, tableBody);
   getTotalPrice(goods);
-  return tableBody, tr;
+  
 }
-
-function deleteGoods() {
-  tableBody.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target.closest(".table__btn_del")) {
-      target.closest(".goods__row").remove();
-      const allGoodsRow = Array.from(tableBody.querySelectorAll(".goods__row"));
-      goods = allGoodsRow;
-    }
-  });
-}
-deleteGoods();
-
-const renderGoods = (goods) => {
-  goods.map(item => {
-    return createRow(item);
-  });
-}
-
-const modalControl = (btnAddGoods) => {
-
-  const openModal = () => {
-    overlay.classList.add('active');
-    const numGeneratorRandomId = generatorRandomId();
-    modalId.textContent = numGeneratorRandomId;
-  };
-  const closeModal = () => {
-    overlay.classList.remove('active');
-    modalCheckbox.checked = false;
-    modalInputDiscount.disabled = true;
-  };
-
-  btnAddGoods.addEventListener('click', openModal);
-  modalClose.addEventListener('click', closeModal);
-
-  overlay.addEventListener('click', e => {
-    const target = e.target;
-    if (target === overlay || target.classList.contains('active')) {
-      closeModal();
-    }
-  });
-  return {
-    closeModal
-  };
-
-};
-
-const generatorRandomId = () => {
-  const randomId = Math.round((Math.random() * 246016548165120) + 1);
-  return randomId;
-};
-
-const totalPrice = (countProductModal, modalInputDiscount, priceProductModal) => {
-
-  const calculationTotalPrices = () => {
-    let modalInputDiscount = document.querySelector('.modal__input_discount');
-    let countProductModal = document.getElementById('count');
-    let priceProductModal = document.getElementById('price');
-
-    let disc = parseFloat(modalInputDiscount.value) / 100;
-    let total = countProductModal.value * priceProductModal.value;
-    let totalSumDisc = total * disc;
-    let totalWithDisc = Math.round(total - totalSumDisc);
-    modalTotalPrice.innerHTML = `$ ${totalWithDisc}`;
-  };
-
-  countProductModal.addEventListener('blur', calculationTotalPrices);
-  modalInputDiscount.addEventListener('blur', calculationTotalPrices);
-  priceProductModal.addEventListener('blur', calculationTotalPrices);
-};
-
-const addGoodstData = newGoods => {
-  goods.push(newGoods);
-};
-
-const addGoodsPage = (goods, tableBody) => {
-  tableBody.append(createRow(goods));
-}
-
-
-
-const formControl = (modalForm, tableBody) => {
-
-  modalCheckbox.addEventListener("click", () => {
-    if (
-      modalCheckbox.checked && modalInputDiscount.disabled === true) {
-      modalInputDiscount.disabled = false;
-    } else {
-      modalInputDiscount.disabled = true;
-      modalInputDiscount.value = '';
-    }
-  });
-
-  modalForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    let newGoods = Object.fromEntries(formData);
-    newGoods.id = generatorRandomId();
-    newGoods.title = newGoods.name;
-
-    addGoodstData(newGoods);
-    addGoodsPage(newGoods, tableBody);
-    modalForm.reset();
-    modalTotalPrice.value = `$`;
-    overlay.classList.remove('active');
-
-  });
-};
-function getTotalPrice(goods) {
-  let total = 0;
-  goods.forEach((item) => {
-    total += item.price * item.count;
-  });
-  crmTotalPrice.textContent = `$${total}`;
-}
-
-getTotalPrice(goods);
-
-
-renderGoods(goods);
-modalControl(btnAddGoods);
-totalPrice(countProductModal, discountProductModal, priceProductModal);
-formControl(modalForm, tableBody);
