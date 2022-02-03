@@ -1,14 +1,18 @@
-import {getTotalPrice} from './modules/getTotalPrice.js';
+
+import {getTotalPrice} from './getTotalPrice.js';
+import {goods} from '../../data.js';
+
+export const tableBody = document.querySelector('.table__body');
 
 export const createRow = ({
-    id: id,
-    title: title,
-    price: price,
-    description: description,
-    category: category,
-    count: count,
-    units: units,
-  }) => {
+  id: id,
+  title: title,
+  price: price,
+  description: description,
+  category: category,
+  count: count,
+  units: units,
+}) => {
   
   
     const tr = document.createElement('tr');
@@ -59,7 +63,6 @@ export const createRow = ({
   
     tr.append(tdId, tdName, tdNameMeasurement, tdCount, tdPrice, tdTotalPrice, tdBtnWrap, buttonPic, buttonEdit, buttonDel);
     tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
-  
   
     tableBody.append(tr);
     getTotalPrice(goods);

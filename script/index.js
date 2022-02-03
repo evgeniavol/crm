@@ -1,12 +1,12 @@
-import {formControl, modalControl, } from './modules/controls.js';
-import {renderGoods} from './modules/renderGoods';
-import {getTotalPrice} from './modules/getTotalPrice.js';
-
+import {formControl,  modalControl, totalPrice} from './modules/controls.js';
+import {renderGoods, deleteGoods} from './modules/renderGoods.js';
+import { getTotalPrice, crmTotalPrice} from './modules/getTotalPrice.js';
+import {tableBody} from './modules/createElems.js';
 let goods = [{
     "id": 1,
     "title": "Смартфон Xiaomi 11T 8/128GB",
     "price": 27000,
-    "description": "Смартфон Xiaomi 11T – это представитель флагманской линейки, выпущенной во второй половине 2021 года. И он полностью соответствует такому позиционированию, предоставляя своим обладателям возможность пользоваться отличными камерами, ни в чем себя не ограничивать при запуске игр и других требовательных приложений.",
+    "description": "Смартфон Xiaomi 11T – это представитель флагманской линейки.",
     "category": "mobile-phone",
     "discont": false,
     "count": 3,
@@ -34,7 +34,7 @@ let goods = [{
     "id": 3,
     "title": "ТВ приставка MECOOL KI",
     "price": 12400,
-    "description": "Всего лишь один шаг сделает ваш телевизор умным, Быстрый и умный MECOOL KI PRO, прекрасно спроектированный, сочетает в себе прочный процессор Cortex-A53 с чипом Amlogic S905D",
+    "description": "Всего лишь один шаг сделает ваш телевизор умным, Быстрый и умный MECOOL KI PRO.",
     "category": "tv-box",
     "discont": 15,
     "count": 4,
@@ -48,7 +48,7 @@ let goods = [{
     "id": 4,
     "title": "Витая пара PROConnect 01-0043-3-25",
     "price": 22,
-    "description": "Витая пара Proconnect 01-0043-3-25 является сетевым кабелем с 4 парами проводов типа UTP, в качестве проводника в которых используется алюминий, плакированный медью CCA. Такая неэкранированная витая пара с одножильными проводами диаметром 0.50 мм широко применяется в процессе сетевых монтажных работ. С ее помощью вы сможете обеспечить развертывание локальной сети в домашних условиях или на предприятии, объединить все необходимое вам оборудование в единую сеть.",
+    "description": "Витая пара Proconnect 01-0043-3-25 является сетевым кабелем с 4 парами проводов типа UTP.",
     "category": "cables",
     "discont": false,
     "count": 420,
@@ -62,14 +62,19 @@ let goods = [{
 
 
 
-let crmTotalPrice = document.querySelector(".crm__total-price");
-
 {
+  const overlayModal = document.querySelector('.overlay__modal');
+  const btnAddGoods = document.querySelector('.panel__add-goods');
+  let discountProductModal = document.getElementById('discount');
+  let countProductModal = document.getElementById('count');
+  let priceProductModal = document.getElementById('price');
+  const modalForm = document.querySelector('.modal__form');
+
 
   renderGoods(goods);
   modalControl(btnAddGoods);
   totalPrice(countProductModal, discountProductModal, priceProductModal);
   formControl(modalForm, tableBody);
   getTotalPrice(goods);
-  
+
 }

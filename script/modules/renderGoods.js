@@ -1,4 +1,4 @@
-import {createRow} from './createElems.js'
+import {tableBody, createRow} from './createElems.js';
 
 export const renderGoods = (goods) => {
     goods.map(item => {
@@ -7,6 +7,7 @@ export const renderGoods = (goods) => {
   }
 
  export  function deleteGoods() {
+ 
     tableBody.addEventListener("click", (e) => {
       const target = e.target;
       if (target.closest(".table__btn_del")) {
@@ -17,4 +18,5 @@ export const renderGoods = (goods) => {
     });
   }
   deleteGoods();
+
   

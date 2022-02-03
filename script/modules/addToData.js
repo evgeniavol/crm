@@ -1,8 +1,6 @@
+import { goods } from "../../data.js";
 
-  import { goods } from "../../data.js";
-  
-  export const addGoodstData = newGoods => {
-    goods.push(newGoods);
-  };
-  
-  
+export const addGoodstData = newGoods => {
+  goods.push(newGoods);
+};
+

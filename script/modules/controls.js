@@ -3,34 +3,25 @@ import {addGoodsPage} from './addToPage.js';
 import {addGoodstData} from './addToData.js';
 
 const modalTitle = document.querySelector('.modal__title');
-const modalForm = document.querySelector('.modal__form');
-const modalCheckbox = document.querySelector('.modal__checkbox');
-const overlay = document.querySelector('.overlay');
-const overlayModal = document.querySelector('.overlay__modal');
-const tableBody = document.querySelector('.table__body');
-const removeActiveOverlay = overlay.classList.remove('active');
-const btnAddGoods = document.querySelector('.panel__add-goods');
-const modalClose = document.querySelector('.modal__close');
 const table = document.querySelector('.goods__table table');
-
 const nameProductModal = document.getElementById('name');
 const categoryProductModal = document.getElementById('category');
 const descriptionProductModal = document.getElementById('description');
 const unitsProductModal = document.getElementById('units');
 let modalInputDiscount = document.querySelector('.modal__input_discount');
-let discountProductModal = document.getElementById('discount');
-let countProductModal = document.getElementById('count');
-let priceProductModal = document.getElementById('price');
 let modalId = document.querySelector('.vendor-code__id');
 let modalTotalPrice = document.querySelector('.modal__total-price');
 const modalBtnSumbit = document.querySelector('.modal__submit');
+const modalCheckbox = document.querySelector('.modal__checkbox');
 
 export const formControl = (modalForm, tableBody) => {
-
-    modalCheckbox.addEventListener("click", () => {
-      if (
+  const overlay = document.querySelector('.overlay');
+  overlay.classList.remove('active');
+  
+  modalCheckbox.addEventListener("click", () => {
+    if (
         modalCheckbox.checked && modalInputDiscount.disabled === true) {
-        modalInputDiscount.disabled = false;
+         modalInputDiscount.disabled = false;
       } else {
         modalInputDiscount.disabled = true;
         modalInputDiscount.value = '';
@@ -49,12 +40,14 @@ export const formControl = (modalForm, tableBody) => {
       modalForm.reset();
       modalTotalPrice.value = `$`;
       overlay.classList.remove('active');
-  
     });
   };
 
-
+  
   export const modalControl = (btnAddGoods) => {
+  const overlay = document.querySelector('.overlay');
+    
+    const modalClose = document.querySelector('.modal__close');
 
     const openModal = () => {
       overlay.classList.add('active');
@@ -66,7 +59,7 @@ export const formControl = (modalForm, tableBody) => {
       modalCheckbox.checked = false;
       modalInputDiscount.disabled = true;
     };
-  
+
     btnAddGoods.addEventListener('click', openModal);
     modalClose.addEventListener('click', closeModal);
   
@@ -88,7 +81,7 @@ export const formControl = (modalForm, tableBody) => {
   };
   
   export const totalPrice = (countProductModal, modalInputDiscount, priceProductModal) => {
-  
+
     const calculationTotalPrices = () => {
       let modalInputDiscount = document.querySelector('.modal__input_discount');
       let countProductModal = document.getElementById('count');
