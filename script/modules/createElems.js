@@ -4,6 +4,34 @@ import {goods} from '../../data.js';
 
 export const tableBody = document.querySelector('.table__body');
 
+const showGoodsImage = (tr) => {
+
+  const goodsAttr = tr.querySelector(".table__btn_pic");
+  goodsAttr.addEventListener("click", (e) => {
+    const target = e.target;
+
+    const widthWin = 800;
+    const heightWin = 600;
+
+    const offsetTop = (screen.height - heightWin) / 2;
+    const offsetLeft = (screen.width - widthWin) / 2;
+
+    const wind = open(
+      target.dataset.pic,
+      '',
+      `width=${widthWin},height=${heightWin},top=${offsetTop},left=${offsetLeft}`
+    );
+
+    const img = document.createElement('img');
+    img.src = target.dataset.pic;
+    img.width = '100' + '%';
+    img.height = '100' + '%';
+    img.alt = "good_img";
+
+    wind.document.body.append(img);
+  });
+};
+
 export const createRow = ({
   id: id,
   title: title,
@@ -12,6 +40,7 @@ export const createRow = ({
   category: category,
   count: count,
   units: units,
+  images: {},
 }) => {
   
   
@@ -54,6 +83,8 @@ export const createRow = ({
   
     const buttonPic = document.createElement('button');
     buttonPic.classList.add('table__btn', 'table__btn_pic');
+    buttonPic.classList.add('table__btn', 'table__btn_pic');
+    buttonPic.setAttribute('data-pic', '../../image.jpg');
   
     const buttonEdit = document.createElement('button');
     buttonEdit.classList.add('table__btn', 'table__btn_edit');
@@ -65,6 +96,7 @@ export const createRow = ({
     tdBtnWrap.append(buttonPic, buttonEdit, buttonDel);
   
     tableBody.append(tr);
+    showGoodsImage(tr);
     getTotalPrice(goods);
     return tableBody, tr;
   }
