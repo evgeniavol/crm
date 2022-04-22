@@ -359,3 +359,8 @@
     margin-bottom: 20px;
   }
 }
+.warning-text {
+  text-transform: uppercase;
+  color: red;
+  font-size: 16px;
+}

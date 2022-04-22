@@ -1,4 +1,5 @@
 import {tableBody, createRow} from './createElems.js';
+import {goods} from '../../data.js';
 
 export const renderGoods = (goods) => {
     goods.map(item => {
@@ -12,11 +13,9 @@ export const renderGoods = (goods) => {
       const target = e.target;
       if (target.closest(".table__btn_del")) {
         target.closest(".goods__row").remove();
-        const allGoodsRow = Array.from(tableBody.querySelectorAll(".goods__row"));
-        goods = allGoodsRow;
+        let allGoodsRow = Array.from(tableBody.querySelectorAll(".goods__row"));
       }
     });
   }
   deleteGoods();
 
-  

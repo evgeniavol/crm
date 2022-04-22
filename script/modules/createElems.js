@@ -40,7 +40,7 @@ export const createRow = ({
   category: category,
   count: count,
   units: units,
-  images: {},
+  images: images,
 }) => {
   
   
